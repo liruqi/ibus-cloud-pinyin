@@ -1,0 +1,20 @@
+K 10
+svn:ignore
+V 228
+request-main.c
+pinyin-utils.c
+dbus-binding.c
+config.c
+ibus-engine.c
+database.c
+frontend-utils.c
+main.c
+lua-binding.c
+c-flags.txt
+c-flags-2.txt
+valac-flags.txt
+valac-flags-2.txt
+ibus-cloud-pinyin-request
+ibus-engine-cloud-pinyin
+
+END

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/145/trunk/lua
+END
+engine_sogou.lua
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/46/trunk/lua/engine_sogou.lua
+END
+config.lua
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/145/trunk/lua/config.lua
+END
+engine_qq.lua
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/141/trunk/lua/engine_qq.lua
+END

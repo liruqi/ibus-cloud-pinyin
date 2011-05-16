@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/148/trunk/src
+END
+frontend-utils.vala
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/142/trunk/src/frontend-utils.vala
+END
+scel-import-selector.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/103/trunk/src/scel-import-selector.py
+END
+database.vala
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/107/trunk/src/database.vala
+END
+pinyin-utils.vala
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/148/trunk/src/pinyin-utils.vala
+END
+main.vala
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/148/trunk/src/main.vala
+END
+config.vala
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/148/trunk/src/config.vala
+END
+dbus-binding.vala
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/148/trunk/src/dbus-binding.vala
+END
+ibus-engine.vala
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/142/trunk/src/ibus-engine.vala
+END
+lua-binding.vala
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/148/trunk/src/lua-binding.vala
+END
+ibus-1.0.vapi
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/17/trunk/src/ibus-1.0.vapi
+END
+request-main.vala
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/138/trunk/src/request-main.vala
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/148/trunk/src/Makefile
+END
