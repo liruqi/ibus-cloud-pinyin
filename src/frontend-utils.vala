@@ -38,15 +38,8 @@ namespace icp {
 
     public static void
     notify(string title, string? content = null, string? icon = null) {
-      Notify.Notification notification
-        = new Notify.Notification(title, content, icon, null);
-      try {
-        notification.show();
-      } catch (Error e) {
-        stdout.printf("Notification: %s %s %s\n", title, content, icon);
-        // then, just ignore
-        ;
-      }
+      // disable notification for dependence issue
+      stdout.printf("Notification: %s %s %s\n", title, content, icon);
     }
 
     public static uint64 get_current_time() {

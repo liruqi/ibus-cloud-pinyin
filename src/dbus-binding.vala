@@ -63,19 +63,18 @@ namespace icp {
 
     // this convert mix cloud results and local database
     public static string convert(Pinyin.Sequence pinyins,
-        bool offline_mode = false,
-        out int cloud_length = &(DBusBinding.last_cloud_length)) {
+        bool offline_mode = false) {
       if (!offline_mode)
         for(int i = pinyins.size; i > 0; i--) {
           string result = query(pinyins.to_string(0, i));
           if (result.size() > 0) {
-            cloud_length = (int)result.length;
+            DBusBinding.last_cloud_length = (int)result.length;
             return result + Database.greedy_convert(
                 new Pinyin.Sequence.copy(pinyins, i)
                 );
           }
         }
-      cloud_length = 0;
+      DBusBinding.last_cloud_length = 0;
       return Database.greedy_convert(pinyins);
     }
 
@@ -174,7 +173,8 @@ namespace icp {
         fs.seek(0x1540 + 4, SeekType.SET, null);
         while (true) {
           uint16[] pinyin_header = new uint16[2];
-          fs.read((uint8[])pinyin_header, 4, null);
+          size_t size = 4;
+          fs.read_all((uint8[])pinyin_header, out size, null);
 
           if (pinyin_header[1] == 0) break;
           if (pinyin_map.has_key((int)pinyin_header[0])) break;
@@ -217,7 +217,7 @@ namespace icp {
             size_t freq_len = 12 + offset * (12 + pinyin_count * 2 + 2);
 
             uint8[] freq_data = new uint8[freq_len];
-            fs.read((uint8[]) freq_data, freq_len, null);
+            fs.read_all((uint8[]) freq_data,out freq_len, null);
 
             double freq = 0;
             double freq_base = 1;
@@ -265,8 +265,8 @@ namespace icp {
         var sum = new Checksum(ChecksumType.MD5);
         try {
           if (!fs.seek(offset, SeekType.SET, null)) return false;
-          char[] bytes = new char[size];
-          if (fs.read(bytes, size, null) != size) return false;
+          uint8[] bytes = new uint8[size];
+          if (!fs.read_all(bytes, out size, null)) return false;
           sum.update((uchar[])bytes, size);
 
           return (sum.get_string() == md5);
@@ -277,7 +277,8 @@ namespace icp {
 
       static uint16 read_uint16(FileInputStream fs) throws IOError {
         uint16[] data = new uint16[1];
-        if (fs.read((uint8[])data, 2, null) == 0)
+        size_t size = 2;
+        if (!fs.read_all((uint8[])data,out size, null))
           throw new IOError.NO_MORE_CONTENT("read nothing");
         return data[0];
       }
@@ -289,8 +290,8 @@ namespace icp {
           if (offset > 0) {
             if (!fs.seek(offset, SeekType.SET, null)) return result;
           }
-          char[] bytes = new char[size + 1];
-          if (fs.read(bytes, size, null) != size) {
+          uint8[] bytes = new uint8[size + 1];
+          if (fs.read_all(bytes,out size, null)) {
             throw new IOError.NO_MORE_CONTENT("read nothing");
           }
           bytes[size] = 0;

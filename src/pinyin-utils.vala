@@ -818,11 +818,11 @@ namespace icp {
       consonant_reverse_ids = new HashMap<int, string>();
       vowel_reverse_ids = new HashMap<int, string>();
 
-      foreach (var entry in consonant_ids)
-        consonant_reverse_ids[entry.value] = entry.key;
+      foreach (string key in consonant_ids.keys)
+        consonant_reverse_ids[ consonant_ids[key] ] = key;
 
-      foreach (var entry in vowel_ids)
-        vowel_reverse_ids[entry.value] = entry.key;
+      foreach (string key in vowel_ids.keys)
+        vowel_reverse_ids[ vowel_ids[key] ] = key;
 
       // for some special ones: ü
       vowel_reverse_ids[56] = "ü";

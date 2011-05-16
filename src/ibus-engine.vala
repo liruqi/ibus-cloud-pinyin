@@ -744,14 +744,14 @@ namespace icp {
         return handled;
       }
 
-      private override void page_up() {
+      private void page_up() {
         if (table_visible && table.page_up()) {
           update_lookup_table(table, true);
           page_index --;
         }
       }
 
-      private override void page_down() {
+      private void page_down() {
         if (table_visible && table.page_down()) {
           update_lookup_table(table, true);
           page_index ++;
@@ -767,7 +767,7 @@ namespace icp {
         user_pinyins.clear();
       }
 
-      private override void candidate_clicked (uint index, uint button,
+      private void candidate_clicked (uint index, uint button,
           uint state) {
 
         index += table.get_page_size() * page_index;
@@ -855,11 +855,10 @@ namespace icp {
         }
         // preedit
         {
-          int cloud_length;
+          int cloud_length = 0;
           pinyin_buffer_preedit = DBusBinding.convert(
               pinyin_buffer, 
-              offline_mode,
-              out cloud_length
+              offline_mode
               );
 
           var color_list = new ArrayList<ColorSegment>();
@@ -869,10 +868,9 @@ namespace icp {
           foreach (PendingSegment seg in pending_segment_list) {
             if (seg.content == null && seg.pinyins != null) {
               // mixed cloud and local
-              int cloud_len;
+              int cloud_len = 0;
               string content =
-                DBusBinding.convert(seg.pinyins, offline_mode,
-                    out cloud_len
+                DBusBinding.convert(seg.pinyins, offline_mode
                     );
               pending_preedit += content;
 

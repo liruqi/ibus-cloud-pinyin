@@ -1,0 +1,11 @@
+This is a modified version of ibus-cloud-pinyin project on http://code.google.com/p/ibus-cloud-pinyin/
+
+My popuse is to update code for vala 0.12 on Ubuntu, for easier compile & install.
+
+INSTALL on Ubuntu (tested in 11.04):
+  apt-get install liblua5.1-0-dev liblua5.1-socket2 libsqlite3-dev libibus-dev libnotify-dev lua5.1 libgee-dev valac sqlite3
+  git clone git://github.com/liruqi/ibus-cloud-pinyin.git
+  cd ibus-cloud-pinyin
+  make
+  sudo make install
+

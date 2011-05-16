@@ -25,7 +25,7 @@ using Gee;
 namespace icp {
   class LuaBinding {
     private static LuaVM vm;
-    private static ThreadPool thread_pool;
+    private static ThreadPool<string> thread_pool;
     private static Gee.LinkedList<string> script_pool;
 
     private static HashMap<string, CloudEngine> engines;
@@ -49,17 +49,18 @@ namespace icp {
     public static void show_engine_speed_rank() {
       if (engines.size == 0) return;
       string content = "平均响应时间(仅成功请求):";
-      foreach (var i in engines) {
-        content += "\n    %s: ".printf(i.key);
-        if (i.value.response_count == 0) content += "N/A";
+      foreach (string i in engines.keys) {
+        content += "\n    %s: ".printf(i);
+        CloudEngine e = engines[i];
+        if (e.response_count == 0) content += "N/A";
         else 
-        content += "%.3f s".printf(i.value.response_time 
-          / i.value.response_count
+        content += "%.3f s".printf(e.response_time 
+          / e.response_count
           );
       }
       content += "\n采用次数:";
-      foreach (var i in engines) {
-        content += "\n    %s: %d".printf(i.key, i.value.response_count);
+      foreach (string i in engines.keys) {
+        content += "\n    %s: %d".printf(i, engines[i].response_count);
       }
       Frontend.notify("网络请求数据", content, Config.program_main_icon);
     }
@@ -655,7 +656,7 @@ namespace icp {
       vm.register("register_engine", l_register_engine);
 
       try {
-        thread_pool = new ThreadPool(do_string_internal, 1, true);
+        thread_pool = new ThreadPool<string>(do_string_internal, 1, true);
       } catch (ThreadError e) {
         stderr.printf("LuaBinding cannot create thread pool: %s\n", 
             e.message
@@ -666,16 +667,14 @@ namespace icp {
       load_configuration();
     }
 
-    private static void do_string_internal(void* data) {
+    private static void do_string_internal(string script) {
       // do not execute other script if being forked
       // prevent executing them two times
-      string script = (string)data;
 
-      switch(script) {
-        case ".stop_conf":
+      if(script == ".stop_conf") {
           in_configuration = false;
-        break;
-        default:
+          return;
+      }
         vm.load_string(script);
         if (vm.pcall(0, 0, 0) != 0) {
           string error_message = vm.to_string(-1);
@@ -683,8 +682,6 @@ namespace icp {
             Frontend.notify("Lua Error", error_message, "error");
           vm.pop(1);
         }
-        break;
-      }
     }
 
     public static void do_string(string script) {
@@ -698,7 +695,7 @@ namespace icp {
 
         // push script into script_pool to keep it safe
         script_pool.add(script);
-        thread_pool.push((void*)script_pool.last());
+        thread_pool.push(script_pool.last());
       } catch (ThreadError e) {
         stderr.printf(
             "LuaBinding fails to launch thread from thread pool: %s\n",
