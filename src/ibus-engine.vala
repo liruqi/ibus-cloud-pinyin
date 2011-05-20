@@ -744,14 +744,14 @@ namespace icp {
         return handled;
       }
 
-      private void page_up() {
+      public override void page_up() {
         if (table_visible && table.page_up()) {
           update_lookup_table(table, true);
           page_index --;
         }
       }
 
-      private void page_down() {
+      public override void page_down() {
         if (table_visible && table.page_down()) {
           update_lookup_table(table, true);
           page_index ++;
@@ -767,7 +767,7 @@ namespace icp {
         user_pinyins.clear();
       }
 
-      private void candidate_clicked (uint index, uint button,
+      public override void candidate_clicked (uint index, uint button,
           uint state) {
 
         index += table.get_page_size() * page_index;
