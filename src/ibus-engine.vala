@@ -855,12 +855,11 @@ namespace icp {
         }
         // preedit
         {
-          int cloud_length = 0;
           pinyin_buffer_preedit = DBusBinding.convert(
               pinyin_buffer, 
               offline_mode
               );
-
+          int cloud_length = DBusBinding.last_cloud_length;
           var color_list = new ArrayList<ColorSegment>();
 
           string pending_preedit = "";
@@ -868,10 +867,10 @@ namespace icp {
           foreach (PendingSegment seg in pending_segment_list) {
             if (seg.content == null && seg.pinyins != null) {
               // mixed cloud and local
-              int cloud_len = 0;
               string content =
                 DBusBinding.convert(seg.pinyins, offline_mode
                     );
+              int cloud_len = DBusBinding.last_cloud_length;
               pending_preedit += content;
 
               color_list.add(new ColorSegment(Config.Colors.preedit_remote,

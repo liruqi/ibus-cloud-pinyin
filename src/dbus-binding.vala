@@ -30,7 +30,7 @@ namespace icp {
     private static DBus.Connection conn;
     private static dynamic DBus.Object bus;
     private static CloudPinyin server;
-    private static int last_cloud_length;
+    public static int last_cloud_length;
 
     private class Response {
       public string content { get; private set; }
