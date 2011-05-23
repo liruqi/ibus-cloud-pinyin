@@ -30,26 +30,13 @@ MSG_SUFFIX=\x1b[33;00m
 
 all: ibus-engine-cloud-pinyin ibus-cloud-pinyin-request
 
-ibus-engine-cloud-pinyin: $(CFLAGFILE) $(CSRCS)
+ibus-engine-cloud-pinyin: $(CFLAGFILE)
 	@$(ECHO) "$(MSG_PREFIX)Building $@ ...$(MSG_SUFFIX)"
 	$(CC) $(CFLAGS) $(CSRCS) -g -o $@
 
-ibus-cloud-pinyin-request: request-main.c
+ibus-cloud-pinyin-request: 
 	@$(ECHO) "$(MSG_PREFIX)Building $@ ...$(MSG_SUFFIX)"
-	$(CC) $(CFLAGS2) -Os -o $@ $^
-
-request-main.c: request-main.vala $(VALACFLAGFILE2)
-	@$(ECHO) "$(MSG_PREFIX)Generating C file for ibus-cloud-pinyin-request ...$(MSG_SUFFIX)"
-	$(VALAC) $(VALAFLAGS2) --disable-warnings -C $<
-
-$(CSRCS): $(VALACFLAGFILE) $(VALASRCS)
-	@$(ECHO) "$(MSG_PREFIX)Generating C files for ibus-engine-cloud-pinyin ...$(MSG_SUFFIX)"
-	@-rm -rf $(CSRCS)
-	$(VALAC) $(VALAFLAGS) --disable-warnings  -C $(VALASRCS)
-	@#$(VALAC) $(VALAFLAGS) -C $(VALASRCS)
-	@$(ECHO) "$(MSG_PREFIX)Patching C files (workaround for valac) ...$(MSG_SUFFIX)"
-	@#if ! grep -qe 'dbus_[^t]*thread' main.c; then sed -i 's/gdk_threads_init/dbus_g_thread_init();gdk_threads_init/' main.c; fi
-	for i in *.c; do sed -i "s#@PREFIX@#$(PREFIX)#g" $$i; done
+	$(CC) $(CFLAGS2) -Os -o $@ request-main.c
 
 clean:
 	@$(ECHO) "$(MSG_PREFIX)Cleaning src ...$(MSG_SUFFIX)"
