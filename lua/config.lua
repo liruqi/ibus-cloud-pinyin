@@ -178,8 +178,8 @@ set_switch{
 -- 设置超时，单位为秒，默认如下：
 --[[
 set_timeout{
-	request = 15.0,
-	prerequest = 3.0,
+	request = 2.0,
+	prerequest = 2.0,
 	selection = 2.0,
 }
 --]]
