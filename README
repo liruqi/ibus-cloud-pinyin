@@ -9,3 +9,6 @@ INSTALL on Ubuntu (tested in 11.04):
   make
   sudo make install
 
+Related projects:
+ * https://github.com/sunpinyin/sunpinyin
+ * https://github.com/phuang/ibus-pinyin
